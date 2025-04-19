@@ -38,7 +38,8 @@ sudo apt install -y \
   libx11-6 \
   libglib2.0-0t64 \
   libgtk-3-0t64 \
-  xdg-utils
+  xdg-utils \
+  unzip
 
 
 # Install PM2 globally
