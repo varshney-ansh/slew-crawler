@@ -186,7 +186,7 @@ export async function crawlSite(startUrl, line ,maxDepth = 2, concurrency = 3) {
     const browser = await puppeteer.launch({ headless: 'new', args: [
       '--no-sandbox',
       '--disable-gpu',
-    ] });
+    ] , executablePath: `${process.env.EXECUTABLE_PATH_CHROME}` });
 
     const worker = async () => {
         const page = await browser.newPage();

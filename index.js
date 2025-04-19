@@ -10,7 +10,7 @@ async function CrawlWebsites() {
         crlfDelay: Infinity
     });
 
-    const maxConcurrent = 1;
+    const maxConcurrent = 2; // Adjust this value as needed
     const tasks = new Set();
 
     for await (const line of rl) {

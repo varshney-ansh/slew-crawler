@@ -1,4 +1,4 @@
 # .gitignore
 .env
-
+./crawl.txt
 /node_modules
