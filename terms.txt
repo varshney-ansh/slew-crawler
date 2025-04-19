@@ -1,0 +1,5 @@
+Google Cloud
+AWS 
+Oracle Cloud 
+IBM Cloud
+MongoDB
