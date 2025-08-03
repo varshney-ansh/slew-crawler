@@ -133,11 +133,24 @@ function normalizeUrl(rawUrl) {
 
 // Extract internal links
 async function extractLinks(page, baseDomain) {
-    const rawLinks = await page.evaluate(() =>
-        Array.from(document.querySelectorAll('a'))
-            .map(a => a.href)
-            .filter(href => href && href.startsWith('http'))
-    );
+    
+    let rawLinks = [];
+
+    try {
+        rawLinks = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('a'))
+                .map(a => a.href)
+                .filter(href =>
+                    typeof href === 'string' &&
+                    href.startsWith('http') &&
+                    !href.startsWith('javascript:') &&
+                    !href.startsWith('mailto:')
+                );
+        });
+    } catch (err) {
+        console.warn(`⚠️ Failed to evaluate links on page: ${err.message}`);
+        return [];
+    }
 
     const cleanLinks = new Set();
     const redirectDomains = ['bit.ly', 't.co', 'goo.gl', 'tinyurl.com', 'buff.ly', 'linktr.ee', 'lnk.bio', 'rebrand.ly'];
@@ -186,7 +199,7 @@ export async function crawlSite(startUrl, line ,maxDepth = 2, concurrency = 3) {
     const browser = await puppeteer.launch({ headless: 'new', args: [
       '--no-sandbox',
       '--disable-gpu',
-    ] , executablePath: `${process.env.EXECUTABLE_PATH_CHROME}` });
+    ]});
 
     const worker = async () => {
         const page = await browser.newPage();

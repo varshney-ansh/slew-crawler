@@ -1,4 +1,5 @@
 # .gitignore
 .env
 crawl-rem.txt
+indomains.txt
 /node_modules
